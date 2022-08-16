@@ -3,73 +3,27 @@
 from machine import Pin, PWM
 from time import sleep
 
-INR1 = Pin(3, Pin.OUT)
-INR2 = Pin(4, Pin.OUT)
+from motor import Motor
 
-ENR = PWM(Pin(2))
-ENR.freq(1000)
+print("Robot car")
 
-INL1 = Pin(5, Pin.OUT)
-INL2 = Pin(6, Pin.OUT)
+motor = Motor(2, 3, 4, 7, 5, 6)
 
-ENL = PWM(Pin(7))
-ENL.freq(1000)
+motor.move(50, 50)
 
-ENR.duty_u16(32768)
-INR1.high()
-INR2.low()
+sleep(2)
 
-ENL.duty_u16(32768)
-INL1.high()
-INL2.low()
+motor.move(100, 100)
 
-sleep(3)
+sleep(2)
 
-ENR.duty_u16(32768)
-INR1.low()
-INR2.low()
+motor.move(-100, 100)
 
-ENL.duty_u16(32768)
-INL1.high()
-INL2.low()
+sleep(2)
 
-sleep(1)
+motor.move(100, -100)
 
-ENR.duty_u16(32768)
-INR1.high()
-INR2.low()
+sleep(2)
 
-ENL.duty_u16(32768)
-INL1.high()
-INL2.low()
-
-sleep(3)
-
-ENR.duty_u16(32768)
-INR1.high()
-INR2.low()
-
-ENL.duty_u16(32768)
-INL1.low()
-INL2.low()
-
-sleep(1)
-
-ENR.duty_u16(32768)
-INR1.high()
-INR2.low()
-
-ENL.duty_u16(32768)
-INL1.high()
-INL2.low()
-
-sleep(3)
-
-ENR.duty_u16(32768)
-INR1.low()
-INR2.low()
-
-ENL.duty_u16(65535)
-INL1.low()
-INL2.low()
+motor.stop()
 
