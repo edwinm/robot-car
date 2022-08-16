@@ -2,28 +2,33 @@
 
 from machine import Pin, PWM
 from time import sleep
+import uasyncio as asyncio
 
 from motor import Motor
 
-print("Robot car")
+async def runMotor():
+    motor = Motor(2, 3, 4, 7, 5, 6)
 
-motor = Motor(2, 3, 4, 7, 5, 6)
+    motor.move(50, 50)
 
-motor.move(50, 50)
+    await asyncio.sleep(2)
 
-sleep(2)
+    motor.move(100, 100)
 
-motor.move(100, 100)
+    await asyncio.sleep(2)
 
-sleep(2)
+    motor.move(-100, 100)
 
-motor.move(-100, 100)
+    await asyncio.sleep(2)
 
-sleep(2)
+    motor.move(100, -100)
 
-motor.move(100, -100)
+    await asyncio.sleep(2)
+    
+    motor.stop()
 
-sleep(2)
+async def main():
+    asyncio.create_task(runMotor())
+    await asyncio.sleep(10)
 
-motor.stop()
-
+asyncio.run(main())
