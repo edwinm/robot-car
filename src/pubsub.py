@@ -23,3 +23,19 @@ class PubSub:
 
         if topic != '*':
             self.publish('*', (topic, arg))
+
+    # data = await pubsub.subscription(loop, 'topic_a')
+    # Doesn't work in Micropython...
+    # AttributeError: type object 'Loop' has no attribute 'create_future'
+    def subscription(self, loop, topic):
+        print("subscription {}".format(topic))
+        future = loop.create_future()
+
+        def resolve(data):
+            print("resolve {}".format(data))
+            future.set_result(data)
+            unsubscribe()
+
+        unsubscribe = self.subscribe(topic, resolve)
+
+        return future

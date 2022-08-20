@@ -37,7 +37,7 @@ async def startWifi(pubsub):
                     
         with open('index.html', encoding='utf8') as f:
             for line in f:
-                w.write(line.strip())
+                w.write(line)
 
         await w.drain()
 

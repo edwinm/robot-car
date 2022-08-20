@@ -8,21 +8,20 @@ from wifi import startWifi
 from pubsub import PubSub
 
 pubsub = PubSub()
+motor = Motor(ENA=2, IN1=3, IN2=4, ENB=7, IN3=5, IN4=6)
 
-motor = Motor(2, 3, 4, 7, 5, 6)
-
-def handleWeb(data):
-    if data == 'left':
-        motor.move(0, 50)
+def mainLoop(data):
+    if data == 'forward':
+        motor.move(50, 50)
+    elif data == 'backward':
+        motor.move(-50, -50)
+    elif data == 'left':
+        motor.move(0, 50)  
     elif data == 'right':
         motor.move(50, 0)
     elif data == 'stop':
-        motor.move(0, 0)
-            
-async def runMotor():
-    await asyncio.sleep(10)
-            
-    pubsub.subscribe('web', handleWeb)
+        motor.move(0, 0)  
+    
 
 async def wifi():
     await startWifi(pubsub)
@@ -35,11 +34,10 @@ async def wifi():
 
 def main():
     try:
+        pubsub.subscribe('web', mainLoop)
+        
         loop = asyncio.get_event_loop()
-        
-        loop.create_task(runMotor())
         loop.create_task(wifi())
-        
         loop.run_forever()
     except KeyboardInterrupt:
         print('Interrupted')
