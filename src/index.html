@@ -6,26 +6,27 @@
     <script>
         window.onload = () => {
             const form = document.querySelector('form');
+            const out = document.querySelector('#out');
             const socket = new WebSocket(`ws://${location.host}/ws`);
 
             socket.onmessage = (evt) => {
-                out = evt.data;
+                out.textContent = evt.data;
             };
 
             form.addEventListener('click', (evt) => {
                 evt.preventDefault();
-                socket.send(evt.target.textContent);
+                socket.send(evt.target.value);
             });
         };
     </script>
 </head>
 <body>
     <form>
-        <button>forward</button>
-        <button>backward</button>
-        <button>left</button>
-        <button>right</button>
-        <button>stop</button>
+        <button value="forward">Forward</button>
+        <button value="backward">Backward</button>
+        <button value="left">Left</button>
+        <button value="right">Right</button>
+        <button value="stop">Stop</button>
     </form>
 
     <div id="out"></div>
