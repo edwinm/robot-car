@@ -1,12 +1,12 @@
 import network
 import web
-import uasyncio as asyncio
 from wificonf import wifiConf
 
+
 # access point credentials
-#AP_SSID = 'WebSocket AP'
-#AP_PASSWORD = 'donthackmebro'
-#AP_AUTHMODE = network.AUTH_WPA_WPA2_PSK
+# AP_SSID = 'WebSocket AP'
+# AP_PASSWORD = 'donthackmebro'
+# AP_AUTHMODE = network.AUTH_WPA_WPA2_PSK
 
 # print("Create WiFi access point")
 # wlan = network.WLAN(network.AP_IF)
@@ -23,18 +23,18 @@ async def startWifi(pubsub):
     wlan.connect(ssid, key)
     while not wlan.isconnected():
         pass
-    
+
     print(wlan.ifconfig())
 
     app = web.App(host='0.0.0.0', port=80)
-    
+
     # root route handler
     @app.route('/')
     async def index_handler(r, w):
         w.write(b'HTTP/1.0 200 OK\r\n')
         w.write(b'Content-Type: text/html; charset=utf-8\r\n')
         w.write(b'\r\n')
-                    
+
         with open('index.html', encoding='utf8') as f:
             for line in f:
                 w.write(line)
@@ -67,7 +67,5 @@ async def startWifi(pubsub):
                         continue
         # remove current client from set
         WS_CLIENTS.discard(ws)
-    
+
     await app.serve()
-    
-    

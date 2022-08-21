@@ -8,6 +8,7 @@ from pubsub import PubSub
 pubsub = PubSub()
 motor = Motor(ENA=2, IN1=3, IN2=4, ENB=7, IN3=5, IN4=6)
 
+
 async def mainLoop():
     while True:
         data = await pubsub.wait('web')
@@ -16,12 +17,13 @@ async def mainLoop():
         elif data == 'backward':
             motor.move(-50, -50)
         elif data == 'left':
-            motor.move(0, 50)  
+            motor.move(0, 50)
         elif data == 'right':
             motor.move(50, 0)
         elif data == 'stop':
-            motor.move(0, 0)  
-        
+            motor.move(0, 0)
+
+
 async def wifi():
     await startWifi(pubsub)
     led = Pin(1, Pin.OUT)
@@ -30,6 +32,7 @@ async def wifi():
         await asyncio.sleep_ms(500)
         led.off()
         await asyncio.sleep_ms(500)
+
 
 def main():
     try:
@@ -41,5 +44,6 @@ def main():
         print('Interrupted')
     finally:
         asyncio.new_event_loop()
+
 
 main()
