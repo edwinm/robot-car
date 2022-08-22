@@ -19,14 +19,53 @@
             });
         };
     </script>
+    <style>
+        html, body {
+            height: calc(100vh - 20px);
+            width: 100vw;
+            height: calc(100dvh - 20px);
+            width: 100dvw;
+            margin: 0;
+            position: fixed;
+        }
+        form {
+            display: grid;
+            height: 100%;
+            margin: 10px;
+            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        #forward {
+            grid-row: 1;
+            grid-column: 2;
+        }
+        #backward {
+            grid-row: 2;
+            grid-column: 2;
+        }
+        #left {
+            grid-row: 1 / span 2;
+            grid-column: 1;
+        }
+        #right {
+            grid-row: 1 / span 2;
+            grid-column: 3;
+        }
+        #stop {
+            grid-row: 3;
+            grid-column: 1 / span 3;
+        }
+    </style>
 </head>
 <body>
     <form>
-        <button value="forward">Forward</button>
-        <button value="backward">Backward</button>
-        <button value="left">Left</button>
-        <button value="right">Right</button>
-        <button value="stop">Stop</button>
+        <button id="forward" value="forward">Forward</button>
+        <button id="backward" value="backward">Backward</button>
+        <button id="left" value="left">Left</button>
+        <button id="right" value="right">Right</button>
+        <button id="stop" value="stop">Stop</button>
     </form>
 
     <div id="out"></div>
